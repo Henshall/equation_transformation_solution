@@ -3,3 +3,8 @@
 /Users/wes/Projects/sss/sss/bin/Debug/sss.exe
 /Users/wes/Projects/sss/sss/obj/x86/Debug/sss.exe
 /Users/wes/Projects/sss/sss/obj/x86/Debug/sss.exe.mdb
+/Users/wes/Desktop/storage/work/equation_transformation_solution/sss/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/wes/Desktop/storage/work/equation_transformation_solution/sss/bin/Debug/sss.exe.mdb
+/Users/wes/Desktop/storage/work/equation_transformation_solution/sss/bin/Debug/sss.exe
+/Users/wes/Desktop/storage/work/equation_transformation_solution/sss/obj/x86/Debug/sss.exe
+/Users/wes/Desktop/storage/work/equation_transformation_solution/sss/obj/x86/Debug/sss.exe.mdb
