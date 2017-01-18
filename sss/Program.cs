@@ -247,7 +247,7 @@ namespace sss
 			/// 
 			/// 
 			List<int> addition_list = new List<int>();  //// creates an addition list where the numbers will be added
-			List<string> sum_list = new List<string>();  //// creates an sum list where our values will be sumed
+			List<int> sum_list = new List<int>();  //// creates an sum list where our values will be sumed
 
 
 			foreach (int element in reference_list)
@@ -294,7 +294,7 @@ namespace sss
 								break;
 							}
 
-								i = i + 1
+							i = i + 1;
 						}
 
 						/// make amalgomation list to grab the correct values out of the whole values array
@@ -304,7 +304,7 @@ namespace sss
 						{
 							if (i <= count2)
 							{
-								amalgomation_list.Add(string_element)
+								amalgomation_list.Add(string_element);
 							}
 							i = i + 1;
 						}
@@ -312,15 +312,19 @@ namespace sss
 
 						/// join the amalgomation list into one variable and add it to sum_list
 						string amalgomation = string.Join("", amalgomation_list.ToArray());
-						sum_list.Add(amalgomation);
 
+					///	int amalgomation_int = int.Parse(amalgomation);
+
+					///	sum_list.Add(amalgomation_int);
+					
 					}
 
+				
 
-					/// add sum list
-					foreach (string addition in sum_list)
+					/// 
+					foreach (int addition in sum_list)
 					{
-						
+
 					}
 
 
@@ -360,7 +364,19 @@ namespace sss
 				i = i + 1;
 			}
 
-			foreach (string element in sum_list )
+
+
+
+
+
+
+
+
+
+
+
+
+			foreach (string element in equation_list_to_ones )
 			{
 				Console.WriteLine(element);
 
