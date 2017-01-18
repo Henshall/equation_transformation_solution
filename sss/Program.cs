@@ -23,10 +23,12 @@ namespace sss
 			}
 
 
+
 			/// finds position of equal sign and assign it to 'count' variable
 			int i = 0;
 			foreach (string element in equation_array)
 			{
+
 				if (element == "=")
 				{
 					break;				
@@ -62,7 +64,6 @@ namespace sss
 
 				i = i + 1;
 			}
-
 
 
 
@@ -240,8 +241,15 @@ namespace sss
 			i = 0;  /// reference list number
 			j = 0;  /// equation list number (includs all values)
 			int k = 0;  /// equation list number (excludes operators)
+			int count2 = 0;
 			/// element = value in reference list
 			/// subelement = value in equation list
+			/// 
+			/// 
+			List<int> addition_list = new List<int>();  //// creates an addition list where the numbers will be added
+			List<string> sum_list = new List<string>();  //// creates an sum list where our values will be sumed
+
+
 			foreach (int element in reference_list)
 
 			{
@@ -250,14 +258,70 @@ namespace sss
 				}
 				else
 				{
-
+					
+					/// uses reference list position and values to addition_list. We will be able to use this list in the next step to perform the algebra
 					int ref_list_position = i;
 					int ref_list_number = reference_list[i];
+					addition_list.Add(ref_list_position);
+					string element2 = element.ToString();
+					string[] element3 = element2.Split();     
+
+					foreach (string character in element3)
+					{
+						int element4 = int.Parse(character);
+						addition_list.Add(element4);
+					}
 
 
 
-					///	Console.WriteLine(value_one);
-				Console.WriteLine(value_two);
+					/// here we take the numbers from the equation_list and put them in the sum_list
+
+					foreach (int add_value in addition_list)
+
+					{
+
+						// Get the numbers and put them in a sum_table
+						string whole_value = equation_list_to_ones[add_value];
+
+						string[] whole_value_array = whole_value.Split();
+						i = 0;
+						 count2 = 0;
+						foreach (string whole_value_element in whole_value_array)
+						{
+							if (whole_value_element == "a" || whole_value_element == "b" || whole_value_element == "c" || whole_value_element == "d" || whole_value_element == "e" || whole_value_element == "f" || whole_value_element == "g" || whole_value_element == "h" || whole_value_element == "i" || whole_value_element == "j" || whole_value_element == "k" || whole_value_element == "l" || whole_value_element == "m" || whole_value_element == "n" || whole_value_element == "o" || whole_value_element == "p" || whole_value_element == "q" || whole_value_element == "r" || whole_value_element == "s" || whole_value_element == "t" || whole_value_element == "u" || whole_value_element == "v" || whole_value_element == "w" || whole_value_element == "x" || whole_value_element == "y" || whole_value_element == "z")
+							{
+								count2 = i;
+								break;
+							}
+
+								i = i + 1
+						}
+
+						/// make amalgomation list to grab the correct values out of the whole values array
+						i = 0;
+						List<string> amalgomation_list = new List<string>();
+						foreach (string string_element in whole_value_array)
+						{
+							if (i <= count2)
+							{
+								amalgomation_list.Add(string_element)
+							}
+							i = i + 1;
+						}
+
+
+						/// join the amalgomation list into one variable and add it to sum_list
+						string amalgomation = string.Join("", amalgomation_list.ToArray());
+						sum_list.Add(amalgomation);
+
+					}
+
+
+					/// add sum list
+					foreach (string addition in sum_list)
+					{
+						
+					}
 
 
 
@@ -296,9 +360,9 @@ namespace sss
 				i = i + 1;
 			}
 
-			foreach (string element in equal_table )
+			foreach (string element in sum_list )
 			{
-			///	Console.WriteLine(element);
+				Console.WriteLine(element);
 
 			}
 
