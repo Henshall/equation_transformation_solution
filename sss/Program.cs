@@ -5,24 +5,36 @@ namespace sss
 {
 	class MainClass
 	{
-		public static void Main(string[] args)
+
+
+
+		/// define the equation
+		public static string equation = "x^2 + 3.5xy + y = y^2 - xy + y";
+
+		///  Create an equation list and parses the equation by spaces and puts each element in the list
+		/// 
+		/// 
+		/// 
+		public static	List<string> equation_list = new List<string>();
+		public static	string[] equation_array;
+		public void put_equation_in_list()
 		{
-
-			/// define the equation
-			string equation = "x^2 + 3.5xy + y = y^2 - xy + y";
-
-
-			///  parse values and put into list
-			string[] equation_array;
 			equation_array = equation.Split(' ');
-		
-			List<string> equation_list = new List<string>();
 			foreach (string element in equation_array)
 			{
 				equation_list.Add(element);
 			}
 
+			
+		}
 
+
+	/// <summary>
+	///  removes the equals sign from the list and turns each negative sign into a positive sign and vice versa.
+	/// </summary>
+
+		public void remove_and_replace_sign()
+		{
 
 			/// finds position of equal sign and assign it to 'count' variable
 			int i = 0;
@@ -31,7 +43,7 @@ namespace sss
 
 				if (element == "=")
 				{
-					break;				
+					break;
 				}
 				i = i + 1;
 			}
@@ -46,10 +58,10 @@ namespace sss
 			{
 				equation_list.Insert(count, "+");
 			}
-	
+
 			/// puts equals sign to the end and adds 0
 
-		
+
 			/// changes all signs after the equals sign
 			i = 0;
 			while (i < equation_list.Count)
@@ -57,7 +69,8 @@ namespace sss
 				if (i >= count && equation_list[i] == "+")
 				{
 					equation_list[i] = "-";
-				} else if  (i >= count && equation_list[i] == "-")
+				}
+				else if (i >= count && equation_list[i] == "-")
 				{
 					equation_list[i] = "+";
 				}
@@ -66,17 +79,69 @@ namespace sss
 			}
 
 
+		}
 
 
 
-			/// Algebra Time :) 
 
+
+
+
+			/// Takes everything from equation_list and adds it to a new list
+			public static	List<string> equation_list_to_ones = new List<string>();
+
+
+		public void put_ones_in_front()
+		{
+			foreach (string element in equation_list)
+			{
+				if (element.StartsWith("a") || element.StartsWith("b") || element.StartsWith("c") || element.StartsWith("d") || element.StartsWith("e") || element.StartsWith("f") || element.StartsWith("g") || element.StartsWith("h") || element.StartsWith("i") || element.StartsWith("j") || element.StartsWith("k") || element.StartsWith("l") || element.StartsWith("m") || element.StartsWith("n") || element.StartsWith("o") || element.StartsWith("p") || element.StartsWith("q") || element.StartsWith("r") || element.StartsWith("s") || element.StartsWith("t") || element.StartsWith("u") || element.StartsWith("v") || element.StartsWith("w") || element.StartsWith("x") || element.StartsWith("y") || element.StartsWith("z"))
+				///	if (element != "+" || element != "-")
+				{
+					string new_element = string.Concat("1", element);
+					equation_list_to_ones.Add(new_element);
+					///Console.WriteLine(new_element);
+
+				}
+				else if (element != "+" || element != "-")
+				{
+					equation_list_to_ones.Add(element);
+					///
+				}
+
+
+			}
+
+		}
+
+
+	
+
+
+
+
+
+
+
+
+
+		public static void Main(string[] args)
+		{
+
+
+			MainClass m = new MainClass();
+			m.put_equation_in_list();
+			m.remove_and_replace_sign();
+			m.put_ones_in_front();
+
+	
 
 
 			/// create arrays for each term to begin grouping like terms
 
-			i = 0;
+			int i = 0;
 			int j = 0;
+
 
 			bool found = false;
 			String[] Array = new String[equation_list.Count];
@@ -145,28 +210,6 @@ namespace sss
 		
 
 
-
-			/// creates new list where a number one will be added
-			List<string> equation_list_to_ones = new List<string>();
-
-			foreach (string element in equation_list)
-			{
-				if (element.StartsWith("a") || element.StartsWith("b") || element.StartsWith("c") || element.StartsWith("d") || element.StartsWith("e") || element.StartsWith("f") || element.StartsWith("g") || element.StartsWith("h") || element.StartsWith("i") || element.StartsWith("j") || element.StartsWith("k") || element.StartsWith("l") || element.StartsWith("m") || element.StartsWith("n") || element.StartsWith("o") || element.StartsWith("p") || element.StartsWith("q") || element.StartsWith("r") || element.StartsWith("s") || element.StartsWith("t") || element.StartsWith("u") || element.StartsWith("v") || element.StartsWith("w") || element.StartsWith("x") || element.StartsWith("y") || element.StartsWith("z"))
-			///	if (element != "+" || element != "-")
-				{
-					string new_element = string.Concat("1", element);
-					equation_list_to_ones.Add(new_element);
-					///Console.WriteLine(new_element);
-						
-				}
-				else if (element != "+" || element != "-")
-				{
-					equation_list_to_ones.Add(element);
-					///
-				}
-
-
-			}
 
 
 			///equation_list_to_ones.Sort();
