@@ -27,8 +27,6 @@ namespace sss
 			{
 				equation_list.Add(element);
 			}
-
-			
 		}
 
 
@@ -84,15 +82,8 @@ namespace sss
 
 		}
 
-
-
-
-
-
-
 			/// Takes everything from equation_list and adds it to a new list
 			public static	List<string> equation_list_to_ones = new List<string>();
-
 
 		public void put_ones_in_front()
 		{
@@ -180,6 +171,7 @@ namespace sss
 
 		/// creates equal_tabele to use a sorting reference
 		/// 
+		public static List<string> equal_list = new List<string>();
 
 		public static List<string> equal_table = new List<string>();
 		int i = 0;
@@ -228,7 +220,6 @@ namespace sss
 
 				}
 
-
 				///  create a list of the elements of like terms
 				List<char> last_chars_list = new List<char>();
 				int check = 0;
@@ -247,8 +238,123 @@ namespace sss
 					/// Console.WriteLine(last_chars2);
 					equal_table.Add(last_chars2);
 				}
+			}
+
+			string[] concat_array = concat_list.ToArray();
+			string[] equal_array = equal_table.ToArray();
+			Array.Sort(equal_array, concat_array);
+			concat_list.Clear();
+
+			foreach (string element in equal_array)
+			{
+				equal_list.Add(element);
+
 
 			}
+
+			foreach (string element in concat_array)
+			{
+				concat_list.Add(element);
+
+
+			}
+
+
+
+
+		}
+
+		public static List<string> addition_list = new List<string>();
+
+
+		public void perform_math()
+		{
+
+			int i = 0;
+			foreach (string element in equal_list)
+			{
+						string input = concat_list[i];
+						//string result = Regex.Replace(input, @"([a-zA-Z]).*\w", "");
+						string result = Regex.Replace(input, @"[a-zA-Z].*", "");
+					addition_list.Add(result);
+
+				//	Console.WriteLine(result);
+				i = i + 1;
+			}
+
+			i = 0;
+			foreach (string element2 in equal_list)
+			{
+				if (i == 0)
+				{
+				}
+				else
+				{
+					if (equal_list[i] == equal_list[i - 1])
+					{
+						string number_one = Regex.Replace(addition_list[i - 1], @"[+-]", "");
+						string number_two = Regex.Replace(addition_list[i], @"[+-]", "");
+						string sign_number_one = Regex.Replace(addition_list[i - 1], @"[^+-]", "");
+						string sign_number_two = Regex.Replace(addition_list[i], @"[^+-]", "");
+
+						float sum = float.Parse(number_one) + float.Parse(number_two);
+						float subtract = float.Parse(number_one) - float.Parse(number_two);
+						string sum_from_int = sum.ToString() + equal_list[i];
+						string subtract_from_int = subtract.ToString() + equal_list[i];
+
+					
+
+						if (sign_number_one == sign_number_two)
+						{
+							concat_list.RemoveAt(i);
+							concat_list.Insert(i, sum_from_int);
+							concat_list.RemoveAt(i - 1);
+						}
+						else if (sign_number_one == "+")
+						{
+							concat_list.RemoveAt(i);
+							concat_list.Insert(i, subtract_from_int);
+							concat_list.RemoveAt(i-1);
+						}
+					}
+				}
+				i = i + 1;
+			}
+		}
+
+
+
+
+
+		public void add_signs_and_remove_0s()
+		{
+			int i = 0;
+
+			while (i < concat_list.Count)
+			{
+
+				char[] element_array = concat_list[i].ToArray();
+				/// Console.WriteLine(element_array[0]);
+				string first_char = element_array[0].ToString();
+				if (first_char == "0")
+				{
+					concat_list.RemoveAt(i);
+					Console.WriteLine("removed!");
+				}
+				else if (first_char != "+" && first_char != "+")
+				{
+					concat_list.Insert(i, "+" + concat_list[i]);
+					concat_list.RemoveAt(i + 1);
+
+				}
+
+
+				i = i + 1;
+			}
+
+
+
+
 
 
 
@@ -259,21 +365,13 @@ namespace sss
 
 
 
+		public void join_to_string()
+		{
 
+			string joined = string.Join(" ", concat_list.ToArray());
+			Console.WriteLine(joined);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+		}
 
 
 
@@ -300,7 +398,6 @@ namespace sss
 
 		{
 			///	var valueA = a.match(equationRegex)[0];
-
 			///	Regex equation_r = new Regex(equationRegex, RegexOptions.IgnoreCase);
 			///	Regex number_r = new Regex(equationRegex, RegexOptions.IgnoreCase);
 			///	List<string> resultList = files.Where(myRegex.IsMatch).ToList();
@@ -312,95 +409,7 @@ namespace sss
 
 
 			var matches = Regex.Matches("sdsdds", @"/[a-zA-Z](.*)/g");
-
-		
-
-		
 		}
-
-
-
-
-
-
-
-
-
-
-
-//		var equation = ["+2x", "+1y", "-1x", "+2y"];
-//		var equationRegex = /[a - zA - Z].*/ g;
-//		var numberRegex = /\+([^;]*)[a-zA-z]/g; // Make this the right regex, should match the number part and the sign e.g +3.5
-
-//function sortEquation(a, b)
-//		{
-//			var valueA = a.match(equationRegex)[0];
-//			var valueB = b.match(equationRegex)[0];
-
-//			if (valueA < valueB)
-//			{
-//				return -1;
-//			}
-//			if (valueA > valueB)
-//			{
-//				return 1;
-//			}
-//			// a must be equal to b
-//			return 0;
-//		}
-
-
-//		function reduceEquation(accumulator, currentValue, i, array)
-//		{
-//			var prevValue = array[i - 1];
-//			var splitCurrentValue = currentValue.match(equationRegex);
-//			var splitPreviousValue = prevValue.match(equationRegex);
-
-//			var splitCurrentNumber = currentValue.match(numberRegex);
-//			var splitPreviousNumber = prevValue.match(numberRegex);
-
-//			if (splitCurrentValue[0] === splitPreviousValue[0])
-//			{
-//				var total = Number(splitCurrentNumber[0]) + Number(splitPreviousNumber[0]);
-//				var signedTotal = total > 0 ? "+" + total : String(total);
-
-//				return signedTotal + splitCurrentValue[1];
-//			}
-
-//			return accumulator;
-//		}
-
-//		var finalAnswer = equation
-//			.sort(sortEquation)
-//			.reduce(reduceEquation);
-
-//		console.log(finalAnswer + " = 0");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 		public static void Main(string[] args)
@@ -412,46 +421,20 @@ namespace sss
 			m.add_plus_sign();
 			m.to_concat_list();
 			m.create_equals_table();
+			m.perform_math();
+			m.add_signs_and_remove_0s();
+			m.add_equals_and_zero_to_end();
+			m.join_to_string();
 
-		
 
-		//	Array.Sort(concat_array);
-
-
-
+			//	Array.Sort(concat_array);
 			// m.sort_array();
-
-
-
-		
-
-
-	
-
-
-		
-
-
-
-
 			///equation_list_to_ones.Sort();
-
-
-
-
-
-
-
-
-
 
 			foreach (string element in equation_list_to_ones)
 
 			{
-
 				///Console.WriteLine(element);
-
-
 			}
 
 
@@ -633,25 +616,16 @@ namespace sss
 
 
 
-
-
-			string[] concat_array = concat_list.ToArray();
-			string[] equal_array = equal_table.ToArray();
-
-
-
-			Array.Sort(equal_array, concat_array);
-
 		///	PrintKeysAndValues(myKeys, myValues);
 
 
 
-			m.add_equals_and_zero_to_end();
 
 
-			foreach (string element in concat_array)
+
+			foreach (string element in concat_list)
 			{
-			Console.WriteLine(element);
+		//	Console.WriteLine(element);
 
 			}
 
