@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Linq;
+
 
 namespace sss
 {
@@ -115,7 +118,213 @@ namespace sss
 		}
 
 
-	
+
+
+
+		/// <summary>
+		///  adds equals sign and a 0 to the end of the equation
+		/// </summary>
+
+		public void add_equals_and_zero_to_end()
+
+		{
+			equation_list_to_ones.Add("=");
+			equation_list_to_ones.Add( "0");
+
+		}
+
+
+		/// <summary>
+		///  adds plus sign to the beginning of the equation_to_ones_list if there isnt a minus sign already. This prepares the list to be concatonated
+		/// </summary>
+		public void add_plus_sign()
+
+		{
+			if (equation_list_to_ones[0] != "-")
+			{
+				equation_list_to_ones.Insert(0, "+");
+			}
+		}
+
+
+
+		/// <summary>
+		///  This creates a new list and concatonated all pared element
+		/// </summary>
+		public static	List<string> concat_list = new List<string>();
+		public void to_concat_list()
+		{
+			int i = 0;
+			equation_list_to_ones.Add(" ");
+
+			foreach (string element in equation_list_to_ones)
+
+			{
+				if (i < (equation_list_to_ones.Count - 1) )
+				{
+					string value1 = equation_list_to_ones[i];
+					string value2 = equation_list_to_ones[i + 1];
+					string concat_value = value1 + value2;
+					concat_list.Add(concat_value);
+				}
+
+			i = i + 2;
+			}
+		}
+
+
+
+
+
+
+
+		/// creates equal_tabele to use a sorting reference
+		/// 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/// <summary>
+		///  sorts the list by the first non symbol non didgit character
+		/// 
+		/// </summary>
+
+		public static string equationRegex  = @"/[a - zA - Z].*/ g";
+		public static string numberRegex = @"/\+([^;]*)[a-zA-z]/g";
+		public static string string_after_last_didget = @"/[a-zA-Z](.*)/g";
+		public static List<string> result_list = new List<string>();
+
+		public void sort_array()
+
+		{
+			///	var valueA = a.match(equationRegex)[0];
+
+			///	Regex equation_r = new Regex(equationRegex, RegexOptions.IgnoreCase);
+			///	Regex number_r = new Regex(equationRegex, RegexOptions.IgnoreCase);
+			///	List<string> resultList = files.Where(myRegex.IsMatch).ToList();
+			/// 
+			/// 
+			// var myRegex = new Regex(string_after_last_didget);
+			///	List<string> resultList = concat_list.Where(myRegex.IsMatch).ToList();
+			// List<string> resultList = concat_list.Where(f => myRegex.IsMatch(f)).ToList();
+
+
+			var matches = Regex.Matches("sdsdds", @"/[a-zA-Z](.*)/g");
+
+		
+
+		
+		}
+
+
+
+
+
+
+
+
+
+
+
+//		var equation = ["+2x", "+1y", "-1x", "+2y"];
+//		var equationRegex = /[a - zA - Z].*/ g;
+//		var numberRegex = /\+([^;]*)[a-zA-z]/g; // Make this the right regex, should match the number part and the sign e.g +3.5
+
+//function sortEquation(a, b)
+//		{
+//			var valueA = a.match(equationRegex)[0];
+//			var valueB = b.match(equationRegex)[0];
+
+//			if (valueA < valueB)
+//			{
+//				return -1;
+//			}
+//			if (valueA > valueB)
+//			{
+//				return 1;
+//			}
+//			// a must be equal to b
+//			return 0;
+//		}
+
+
+//		function reduceEquation(accumulator, currentValue, i, array)
+//		{
+//			var prevValue = array[i - 1];
+//			var splitCurrentValue = currentValue.match(equationRegex);
+//			var splitPreviousValue = prevValue.match(equationRegex);
+
+//			var splitCurrentNumber = currentValue.match(numberRegex);
+//			var splitPreviousNumber = prevValue.match(numberRegex);
+
+//			if (splitCurrentValue[0] === splitPreviousValue[0])
+//			{
+//				var total = Number(splitCurrentNumber[0]) + Number(splitPreviousNumber[0]);
+//				var signedTotal = total > 0 ? "+" + total : String(total);
+
+//				return signedTotal + splitCurrentValue[1];
+//			}
+
+//			return accumulator;
+//		}
+
+//		var finalAnswer = equation
+//			.sort(sortEquation)
+//			.reduce(reduceEquation);
+
+//		console.log(finalAnswer + " = 0");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -127,16 +336,27 @@ namespace sss
 
 		public static void Main(string[] args)
 		{
-
-
 			MainClass m = new MainClass();
 			m.put_equation_in_list();
 			m.remove_and_replace_sign();
 			m.put_ones_in_front();
+			m.add_plus_sign();
+			m.to_concat_list();
+
+		
+
+		//	Array.Sort(concat_array);
+
+
+
+			// m.sort_array();
+
+
+
+		
+
 
 	
-
-
 			/// create arrays for each term to begin grouping like terms
 
 			int i = 0;
@@ -144,9 +364,9 @@ namespace sss
 
 
 			bool found = false;
-			String[] Array = new String[equation_list.Count];
+			///String[] Array = new String[equation_list.Count];
 			List<string> equal_table = new List<string>();
-			List<string> count_j_table = new List<string>();
+			///List<string> count_j_table = new List<string>();
 
 
 				foreach (string subelement in equation_list)
@@ -241,8 +461,7 @@ namespace sss
 
 
 
-			equation_list.Insert(equation_list.Count, "=");
-			equation_list.Insert(equation_list.Count, "0");
+		
 
 
 
@@ -414,14 +633,23 @@ namespace sss
 
 
 
+			string[] concat_array = concat_list.ToArray();
+			string[] equal_array = equal_table.ToArray();
 
 
 
+			Array.Sort(equal_array, concat_array);
+
+		///	PrintKeysAndValues(myKeys, myValues);
 
 
-			foreach (string element in equation_list_to_ones )
+
+			m.add_equals_and_zero_to_end();
+
+
+			foreach (string element in concat_array)
 			{
-				Console.WriteLine(element);
+			Console.WriteLine(element);
 
 			}
 
