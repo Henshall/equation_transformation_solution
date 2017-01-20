@@ -11,18 +11,33 @@ namespace sss
 
 
 
-		/// define the equation
-		public static string equation = "x^2 + 3.5xy + y = y^2 - xy + y";
+		/// 
+		/// 
+		/// NOTE: 
+		/// 
+		/// 
+		/// 
+		public static List<string> initial_equation = new List<string>();
+
+			public void set_equation()
+		{
+			Console.WriteLine("Enter an equation and it will be transformed into canonical form. For example:  'x^2 + 3.5xy + y = y^2 - xy + y' will be transformed into: '+1x^2 +4.5xy -1y^2 = 0' ");
+			Console.WriteLine("Note: this program doesnt allow brackets and all plus/minus signs must be seperated from the letters (ex. 2x + 3y) ");
+			Console.WriteLine(" ");
+			Console.Write("Enter Equation: ");  string user_input = Console.ReadLine();
+			initial_equation.Add(user_input);
+
+		}
 
 
-		///  Create an equation list and parses the equation by spaces and puts each element in the list
-		/// 
-		/// 
-		/// 
 		public static	List<string> equation_list = new List<string>();
 		public static	string[] equation_array;
+
+
+
 		public void put_equation_in_list()
 		{
+			string equation = initial_equation[0];
 			equation_array = equation.Split(' ');
 			foreach (string element in equation_array)
 			{
@@ -272,19 +287,7 @@ namespace sss
 		public void perform_math()
 		{
 
-			//int i = 0;
-			//foreach (string element in concat_list)
-			//{
-			//	Console.WriteLine(concat_list[i]);
-			//	i = i + 1;
-
-			//}
-		
-
-
 			int i = 0;
-
-
 			foreach (string element in equal_list)
 			{
 						string input = concat_list[i];
@@ -296,41 +299,45 @@ namespace sss
 				i = i + 1;
 			}
 
+
+
 			i = 0;
 			int j = 0;
-
 			concat_list.Add(" ");
-
 			while (i < equal_list.Count)
 			{
-				
 				if (equal_list[i - count_list.Count] == equal_list[i + 1 - count_list.Count] && equal_list[i - count_list.Count] != "_")
 					{
 						string number_one = Regex.Replace(addition_list[i - count_list.Count ], @"[a-zA-Z+-]", "");
-					string number_two = Regex.Replace(addition_list[i + (1 - count_list.Count)], @"[a-zA-Z+-]", "");
+						string number_two = Regex.Replace(addition_list[i + (1 - count_list.Count)], @"[a-zA-Z+-]", "");
 						string sign_number_one = Regex.Replace(addition_list[i - count_list.Count], @"[^+-]", "");
-					string sign_number_two = Regex.Replace(addition_list[i + (1 - count_list.Count)], @"[^+-]", "");
+						string sign_number_two = Regex.Replace(addition_list[i + (1 - count_list.Count)], @"[^+-]", "");
 
 						float sum = float.Parse(number_one) + float.Parse(number_two);
 						float subtract = float.Parse(number_one) - float.Parse(number_two);
 						string sum_from_int = sum.ToString() + equal_list[i - count_list.Count];
 						string subtract_from_int = subtract.ToString() + equal_list[i - count_list.Count];
 
-					concat_list.Add("_");
-					concat_list.RemoveAt(i - count_list.Count);
-					concat_list.RemoveAt(i - count_list.Count);
+						concat_list.Add("_");
+						concat_list.RemoveAt(i - count_list.Count);
+						concat_list.RemoveAt(i - count_list.Count);
 
 
-					addition_list.Add("_");
+						addition_list.Add("_");
 
-					addition_list.RemoveAt(i - count_list.Count);
-					addition_list.RemoveAt(i - count_list.Count);
-					addition_list.Insert(i - count_list.Count, "+" + sum_from_int);
+						addition_list.RemoveAt(i - count_list.Count);
+						addition_list.RemoveAt(i - count_list.Count);
 
 
-					equal_list.RemoveAt(i + 1 - count_list.Count);
-					equal_list.Add("-");
-					j = j + 1;
+						addition_list.Insert(i - count_list.Count, "+" + sum_from_int);
+						
+
+
+
+
+						equal_list.RemoveAt(i + 1 - count_list.Count);
+						equal_list.Add("-");
+						j = j + 1;
 
 
 						if (sign_number_one == sign_number_two)
@@ -338,9 +345,17 @@ namespace sss
 						char[] element_array = sum_from_int.ToArray();
 						/// Console.WriteLine(element_array[0]);
 						string first_char = element_array[0].ToString();
+						string second_char = element_array[1].ToString();
+
+
+
+
+
+
 						if (first_char == "-" && first_char != "0")
 						{
 							count_list.Add("add");
+
 						}
 						else
 						{
@@ -364,14 +379,44 @@ namespace sss
 				i = i + 1;
 
 				}  /// while loop ending
-				
+
+
+
+
+
+
 
 		}
 
+ 		public void add_signs_and_remove_0s() 		{
 
 
 
-  		public void add_signs_and_remove_0s() 		{ 			int i = 0;  			while (i < concat_list.Count) 			{  				char[] element_array = concat_list[i].ToArray(); 				/// Console.WriteLine(element_array[0]); 				string first_char = element_array[0].ToString(); 				if (first_char == "0") 				{ 					concat_list.RemoveAt(i); 				//	Console.WriteLine("removed!"); 				} 				else if (first_char != "+" && first_char != "+") 				{ 					concat_list.Insert(i, "+" + concat_list[i]); 					concat_list.RemoveAt(i + 1);  				}   				i = i + 1; 			}    		} 
+ 
+
+
+
+ 			int i = 0; 			while (i < concat_list.Count) 			{
+
+
+ 				char[] element_array = concat_list[i].ToArray(); 				/// Console.WriteLine(element_array[0]); 				string first_char = element_array[0].ToString();
+				string second_char = element_array[1].ToString(); 
+
+				if (first_char == "0")
+				{
+					concat_list.RemoveAt(i);
+					//	Console.WriteLine("removed!");
+				} else if (first_char == "+" && second_char == "-")
+				{
+					string element = Regex.Replace(concat_list[i], @"[^-]", "");
+					concat_list.Insert(i, element);
+
+				}
+
+
+			
+
+   				i = i + 1; 			}    		} 
 
 
 		public void remove_spaces()
@@ -399,59 +444,60 @@ namespace sss
 		{
 			string joined = string.Join(" ", concat_list.ToArray());
 			Console.WriteLine("-------------");
-			Console.WriteLine(joined);
+			Console.WriteLine("Result: " +  joined);
 			Console.WriteLine("-------------");
 		}
 
-
-
-
-
-		/// <summary>
-		///  sorts the list by the first non symbol non didgit character
-		/// 
-		/// </summary>
-
-		public static string equationRegex  = @"/[a - zA - Z].*/ g";
-		public static string numberRegex = @"/\+([^;]*)[a-zA-z]/g";
-		public static string string_after_last_didget = @"/[a-zA-Z](.*)/g";
-		public static List<string> result_list = new List<string>();
-
-		public void sort_array()
-
+		public void clear_lists()
 		{
-			///	var valueA = a.match(equationRegex)[0];
-			///	Regex equation_r = new Regex(equationRegex, RegexOptions.IgnoreCase);
-			///	Regex number_r = new Regex(equationRegex, RegexOptions.IgnoreCase);
-			///	List<string> resultList = files.Where(myRegex.IsMatch).ToList();
-			/// 
-			/// 
-			// var myRegex = new Regex(string_after_last_didget);
-			///	List<string> resultList = concat_list.Where(myRegex.IsMatch).ToList();
-			// List<string> resultList = concat_list.Where(f => myRegex.IsMatch(f)).ToList();
-
-
-			var matches = Regex.Matches("sdsdds", @"/[a-zA-Z](.*)/g");
+			equation_list.Clear(); 			equation_list_to_ones.Clear(); 			concat_list.Clear();
+			equal_list.Clear();
+			equal_table.Clear();
+			addition_list.Clear();
+			count_list.Clear();
+			initial_equation.Clear();
+	
 		}
+
+
+
+
 
 
 		public static void Main(string[] args)
 		{
-			MainClass m = new MainClass();
-			m.put_equation_in_list();
-			m.remove_and_replace_sign();
-			m.put_ones_in_front();
-			m.add_plus_sign();
-			m.to_concat_list();
-			m.create_equals_table();
-			m.perform_math();
-			m.remove_spaces();
-			m.add_signs_and_remove_0s();
-			m.add_equals_and_zero_to_end();
-			m.join_to_string();
+	
+
+			int i = 0;
+
+			while (i < 100)
+
+			{
+
+				MainClass m = new MainClass();
+				m.set_equation();
+				m.put_equation_in_list();
+				m.remove_and_replace_sign();
+				m.put_ones_in_front();
+				m.add_plus_sign();
+				m.to_concat_list();
+				m.create_equals_table();
+				m.perform_math();
+				m.remove_spaces();
+				m.add_signs_and_remove_0s();
+				m.add_equals_and_zero_to_end();
+				m.join_to_string();
+				m.clear_lists();
+				i = i + 1;
+			}
+
+	
 
 
-		
+
+
+
+
 
 
 			foreach (string element in concat_list)
