@@ -12,8 +12,7 @@ namespace sss
 
 
 		/// define the equation
-		/// public static string equation = "x^2 + 3.5xy + y = y^2 - xy + y";
-		public static string equation = "- x^2 + 3.5xy + y = y^2 - xy - y - y - y - y - y - y";
+		public static string equation = "x^2 + 3.5xy + y = y^2 - xy + y";
 
 
 		///  Create an equation list and parses the equation by spaces and puts each element in the list
@@ -302,36 +301,34 @@ namespace sss
 
 			concat_list.Add(" ");
 
-			while (i < equal_list.Count - count_list.Count)
+			while (i < equal_list.Count)
 			{
 				
-				if (equal_list[i] == equal_list[i + 1] && equal_list[i] != "_")
+				if (equal_list[i - count_list.Count] == equal_list[i + 1 - count_list.Count] && equal_list[i - count_list.Count] != "_")
 					{
-						string number_one = Regex.Replace(addition_list[i], @"[+-]", "");
-						string number_two = Regex.Replace(addition_list[i + 1], @"[+-]", "");
-						string sign_number_one = Regex.Replace(addition_list[i], @"[^+-]", "");
-						string sign_number_two = Regex.Replace(addition_list[i + 1], @"[^+-]", "");
+						string number_one = Regex.Replace(addition_list[i - count_list.Count ], @"[a-zA-Z+-]", "");
+					string number_two = Regex.Replace(addition_list[i + (1 - count_list.Count)], @"[a-zA-Z+-]", "");
+						string sign_number_one = Regex.Replace(addition_list[i - count_list.Count], @"[^+-]", "");
+					string sign_number_two = Regex.Replace(addition_list[i + (1 - count_list.Count)], @"[^+-]", "");
 
 						float sum = float.Parse(number_one) + float.Parse(number_two);
 						float subtract = float.Parse(number_one) - float.Parse(number_two);
-						string sum_from_int = sum.ToString() + equal_list[i];
-						string subtract_from_int = subtract.ToString() + equal_list[i];
-
-					Console.WriteLine(number_one);
-					Console.WriteLine(number_two);
-
+						string sum_from_int = sum.ToString() + equal_list[i - count_list.Count];
+						string subtract_from_int = subtract.ToString() + equal_list[i - count_list.Count];
 
 					concat_list.Add("_");
-					concat_list.RemoveAt(i);
-					concat_list.RemoveAt(i);
+					concat_list.RemoveAt(i - count_list.Count);
+					concat_list.RemoveAt(i - count_list.Count);
 
 
+					addition_list.Add("_");
 
-					addition_list.RemoveAt(i);
-					addition_list.Insert(i, "+" + sum_from_int);
+					addition_list.RemoveAt(i - count_list.Count);
+					addition_list.RemoveAt(i - count_list.Count);
+					addition_list.Insert(i - count_list.Count, "+" + sum_from_int);
 
 
-					equal_list.RemoveAt(i + 1);
+					equal_list.RemoveAt(i + 1 - count_list.Count);
 					equal_list.Add("-");
 					j = j + 1;
 
@@ -343,17 +340,22 @@ namespace sss
 						string first_char = element_array[0].ToString();
 						if (first_char == "-" && first_char != "0")
 						{
+							count_list.Add("add");
 						}
 						else
 						{
-							concat_list.Insert(i, "+" + sum_from_int);
+							concat_list.Insert(i - count_list.Count, "+" + sum_from_int);
+							count_list.Add("add");
 						}
 
 						///Console.WriteLine(sign_number_one);
+						/// count_list.Add("add");
 					}
 					else if (sign_number_one == "+")
 					{
-						concat_list.Insert(i, subtract_from_int);
+						concat_list.Insert(i - count_list.Count, subtract_from_int);
+						count_list.Add("add");
+
  					}
 					}
 
@@ -370,60 +372,17 @@ namespace sss
 
 
 
-		public void add_signs_and_remove_0s()
-		{
-			int i = 0;
-
-			while (i < concat_list.Count)
-			{
-
-				char[] element_array = concat_list[i].ToArray();
-				/// Console.WriteLine(element_array[0]);
-				string first_char = element_array[0].ToString();
-				if (first_char == "0")
-				{
-					concat_list.RemoveAt(i);
-				}
-				else if (first_char != "+" && first_char != "-")
-				{
-					concat_list.Insert(i, "+" + concat_list[i]);
-					concat_list.RemoveAt(i + 1);
-
-				}
-
-
-				i = i + 1;
-			}
-
-
-
-
-
-
-
-
-		}
-
 
 
 
 
 		public void join_to_string()
 		{
-
 			string joined = string.Join(" ", concat_list.ToArray());
 			Console.WriteLine("-------------");
 			Console.WriteLine(joined);
 			Console.WriteLine("-------------");
-
 		}
-
-
-
-
-
-
-
 
 
 
@@ -467,7 +426,7 @@ namespace sss
 			m.to_concat_list();
 			m.create_equals_table();
 			m.perform_math();
-		//	m.add_signs_and_remove_0s();
+			m.remove_all_spaces();
 			m.add_equals_and_zero_to_end();
 			m.join_to_string();
 
