@@ -371,7 +371,7 @@ namespace sss
 
 
 
-  		public void add_signs_and_remove_0s() 		{ 			int i = 0;  			while (i < concat_list.Count) 			{  				char[] element_array = concat_list[i].ToArray(); 				/// Console.WriteLine(element_array[0]); 				string first_char = element_array[0].ToString(); 				if (first_char == "0") 				{ 					concat_list.RemoveAt(i); 					Console.WriteLine("removed!"); 				} 				else if (first_char != "+" && first_char != "+") 				{ 					concat_list.Insert(i, "+" + concat_list[i]); 					concat_list.RemoveAt(i + 1);  				}   				i = i + 1; 			}    		} 
+  		public void add_signs_and_remove_0s() 		{ 			int i = 0;  			while (i < concat_list.Count) 			{  				char[] element_array = concat_list[i].ToArray(); 				/// Console.WriteLine(element_array[0]); 				string first_char = element_array[0].ToString(); 				if (first_char == "0") 				{ 					concat_list.RemoveAt(i); 				//	Console.WriteLine("removed!"); 				} 				else if (first_char != "+" && first_char != "+") 				{ 					concat_list.Insert(i, "+" + concat_list[i]); 					concat_list.RemoveAt(i + 1);  				}   				i = i + 1; 			}    		} 
 
 
 		public void remove_spaces()
