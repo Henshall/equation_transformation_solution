@@ -359,6 +359,8 @@ namespace sss
  					}
 					}
 
+
+
 				i = i + 1;
 
 				}  /// while loop ending
@@ -367,6 +369,25 @@ namespace sss
 		}
 
 
+
+
+  		public void add_signs_and_remove_0s() 		{ 			int i = 0;  			while (i < concat_list.Count) 			{  				char[] element_array = concat_list[i].ToArray(); 				/// Console.WriteLine(element_array[0]); 				string first_char = element_array[0].ToString(); 				if (first_char == "0") 				{ 					concat_list.RemoveAt(i); 					Console.WriteLine("removed!"); 				} 				else if (first_char != "+" && first_char != "+") 				{ 					concat_list.Insert(i, "+" + concat_list[i]); 					concat_list.RemoveAt(i + 1);  				}   				i = i + 1; 			}    		} 
+
+
+		public void remove_spaces()
+		{
+			int i = 0;
+			while (i < concat_list.Count)
+			{
+				concat_list.Remove(" ");
+				concat_list.Remove(" ");
+				concat_list.Remove("_");
+				concat_list.Remove("_");
+				i = i + 1;
+			}
+
+
+		}
 
 
 
@@ -424,7 +445,8 @@ namespace sss
 			m.to_concat_list();
 			m.create_equals_table();
 			m.perform_math();
-			m.remove_all_spaces();
+			m.remove_spaces();
+			m.add_signs_and_remove_0s();
 			m.add_equals_and_zero_to_end();
 			m.join_to_string();
 
