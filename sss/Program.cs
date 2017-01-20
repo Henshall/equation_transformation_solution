@@ -359,8 +359,6 @@ namespace sss
  					}
 					}
 
-
-
 				i = i + 1;
 
 				}  /// while loop ending
